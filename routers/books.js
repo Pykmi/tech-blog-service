@@ -1,5 +1,6 @@
 var express = require('express'),
-    models = require('../models');
+    models = require('../models'),
+    controller = require('../controllers/books');
 
 // create an express router
 var router = express.Router();
@@ -24,21 +25,8 @@ router.use('/:id', (req, res, next) => {
 
 // /books route
 router.route('/')
-  .get((req, res) => {
-    models.books.find((err, books) => {
-      if(err) {
-        res.status(500).send(err);
-        return;
-      }
-
-      res.json(books);
-    });
-  })
-  .post((req, res) => {
-    let book = new models.books(req.body);
-    book.save();
-    res.status(201).send();
-  });
+  .get(controller().get)
+  .post(controller().post);
 
 // /books/:id route
 router.route('/:id')

@@ -13,3 +13,6 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Running on PORT: ${port}`);
 });
+
+// export app for testing purpose
+module.exports = app;

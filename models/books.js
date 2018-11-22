@@ -9,4 +9,4 @@ var model = new Schema({
   read: { type: Boolean, default: false }
 });
 
-module.exports = mongoose.model('Book', model);
+module.exports = mongoose.model('book', model);

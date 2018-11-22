@@ -1,5 +1,8 @@
-var gulp = require('gulp'),
-    nodemon = require('gulp-nodemon');
+var env = require('gulp-env'),
+    gulp = require('gulp'),
+    gulpMocha = require('gulp-mocha'),
+    nodemon = require('gulp-nodemon'),
+    supertest = require('supertest');
 
 gulp.task('default', () => {
   nodemon({
@@ -13,4 +16,10 @@ gulp.task('default', () => {
   .on.apply('restart', () => {
     console.log('Restarting server...')
   })
+});
+
+gulp.task('test', () => {
+  env({ vars: { ENV: 'Test' } })
+  gulp.src('tests/*.js', { read: false })
+    .pipe(gulpMocha({ reporter: 'nyan' }))
 });
