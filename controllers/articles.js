@@ -2,18 +2,18 @@ var models = require('../models');
 
 const controller = () => {
   const get = (req, res) => {
-    models.books.find((err, books) => {
+    models.articles.find({ public: true }, (err, articles) => {
       if(err) {
         res.status(500).send(err);
         return;
       }
 
-      res.json(books);
+      res.json(articles);
     });
   };
 
   const post = (req, res) => {
-    let book = new models.books(req.body);
+    let article = new models.articles(req.body);
     
     if(!req.body.title) {
       res.status(400);
@@ -21,7 +21,7 @@ const controller = () => {
       return;
     }
 
-    book.save();
+    article.save();
     res.status(201);
     res.send();
   };

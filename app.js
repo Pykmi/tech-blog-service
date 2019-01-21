@@ -2,7 +2,9 @@ var express = require('express'),
     app = require('./server');
 
 // acquire or set default web server port
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 6002;
+
+
 
 // default root route
 app.get('/', (req, res) => {

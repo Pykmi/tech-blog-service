@@ -4,6 +4,7 @@
   "description": "restful api app with node",
   "main": "index.js",
   "scripts": {
+    "start": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Tomi Kaistila",
