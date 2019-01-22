@@ -7,7 +7,9 @@ var router = express.Router();
 
 // article/:name findOne middleware
 router.use('/article/:name', (req, res, next) => {
-  models.articles.findOne({ url: req.params.name }, (err, article) => {
+  const url = req.params.name.toLowerCase();
+  
+  models.articles.findOne({ url }, (err, article) => {
     if(err) {
       res.status(404).send({ error: 'no record found' });
       return;
@@ -15,6 +17,25 @@ router.use('/article/:name', (req, res, next) => {
 
     if(article) {
       req.article = article;
+      next();
+      return;
+    }
+
+    res.status(404).send({ error: 'no record found' });
+  });
+});
+
+router.use('/category/:name', (req, res, next) => {
+  const category = req.params.name.toLowerCase();
+
+  models.articles.find({ category }, (err, articles) => {
+    if(err) {
+      res.status(500).send(err);
+      return;
+    }
+
+    if(articles) {
+      req.articles = articles;
       next();
       return;
     }
@@ -34,5 +55,9 @@ router.route('/article/:name')
     res.json(req.article);
   });
 
-module.exports = router;
+router.route('/category/:name')
+  .get((req, res) => {
+    res.json(req.articles);
+  })
 
+module.exports = router;

@@ -8,7 +8,12 @@ const controller = () => {
         return;
       }
 
-      res.json(articles);
+      let output = {};
+      articles.map((article) => {
+        output[article.url] = article;
+      });
+
+      res.json(output);
     });
   };
 
