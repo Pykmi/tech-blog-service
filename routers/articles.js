@@ -29,13 +29,19 @@ router.use('/category/:name', (req, res, next) => {
   const category = req.params.name.toLowerCase();
 
   models.articles.find({ category }, (err, articles) => {
+    let output = {};
+    
     if(err) {
       res.status(500).send(err);
       return;
     }
 
     if(articles) {
-      req.articles = articles;
+      articles.map((article) => {
+        output[article.url] = article;
+      });
+
+      req.articles = output;
       next();
       return;
     }
