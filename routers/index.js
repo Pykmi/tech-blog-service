@@ -1,1 +1,1 @@
-exports.articles = require('./articles');
+exports.blog = require('./blog');

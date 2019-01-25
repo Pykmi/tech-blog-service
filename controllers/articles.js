@@ -1,37 +1,25 @@
-var models = require('../models');
+var models = require('../models')
+    utils = require('../utils');
+
+const noContent = (res) => res.length < 1;
 
 const controller = () => {
-  const get = (req, res) => {
-    models.articles.find({ public: true }, (err, articles) => {
+  const fetch = (req, res) => {
+    models.articles.find(req.filters, (err, articles) => {
       if(err) {
-        res.status(500).send(err);
+        res.status(500).send();
         return;
       }
 
-      let output = {};
-      articles.map((article) => {
-        output[article.url] = article;
-      });
+      if(noContent(articles)) {
+        res.status(404).send();
+      }
 
-      res.json(output);
+      res.json(utils.toObject(articles));
     });
   };
 
-  const post = (req, res) => {
-    let article = new models.articles(req.body);
-    
-    if(!req.body.title) {
-      res.status(400);
-      res.send('Bad request');
-      return;
-    }
-
-    article.save();
-    res.status(201);
-    res.send();
-  };
-
-  return { get, post }
+  return { fetch }
 };
 
 module.exports = controller;

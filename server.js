@@ -1,31 +1,23 @@
 var express = require('express'),
-    setupMiddleware = require('./middleware',)
+    bodyParser = require('body-parser'),
+    morgan = require('morgan'),
+    cors = require('./cors'),
     connect = require('./connect'),
     router = require('./routers');
 
-// create the express server
+// create server
 var app = express();
 
-// load middleware
-setupMiddleware(app);
+// middleware
+app.use(cors);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(morgan('dev'));
 
-// connect to the database
+// database connection
 connect();
 
-// cors control
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  
-    if(req.method === 'OPTIONS') {
-      res.header('Access-Control-Allow-Methods', 'GET, DELETE, PATCH, POST, PUT');
-      return res.status(200).json({});
-    }
-  
-    next();
-  });
-
-// enable router
-app.use('/api/blog', router.articles);
+// routers
+app.use('/api/blog', router.blog);
 
 module.exports = app;
