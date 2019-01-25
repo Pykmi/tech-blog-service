@@ -1,6 +1,7 @@
 // utility functions
 exports.toObject = (content, output = {}) => {
   content.map((item) => { output[item.url] = item });
+  
   return output;
 };
 
