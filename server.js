@@ -21,3 +21,4 @@ connect();
 app.use('/api/blog', router.blog);
 
 module.exports = app;
+app.use('/api/blog/admin', router.admin);

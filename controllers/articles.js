@@ -17,7 +17,7 @@ const controller = () => {
         if(noContent(articles)) {
           res.status(404).send();
         }
-        console.log(articles);
+        
         res.json(utils.toObject(articles));
       }
     );
