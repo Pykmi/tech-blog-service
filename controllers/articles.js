@@ -27,8 +27,17 @@ const controller = (filters = { public: true, type: 'article' }) => {
   };
 
   const remove = (req, res) => {
-    req.article.remove((err) => {
-      err ? res.status(500).send() : res.status(200).send();
+    model.findOneAndRemove({ type: 'article', url: req.params.url }, (err, docs) => {
+      if(err) {
+        res.status(500).send();
+        return;
+      }
+
+      if(!docs) {
+        res.status(404).send();
+      }
+
+      res.status(200).send();
     });
   };
 
