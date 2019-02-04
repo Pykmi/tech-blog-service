@@ -7,7 +7,7 @@ const toObject = (content, output = {}) => {
   return output;
 };
 
-const controller = (filters = { public: true, type: 'article' }) => {
+const controller = (filters = { public: true }) => {
   const fetch = (req, res) => {
     Object.keys(req.params).forEach((item) => filters[item] = req.params[item]);
 
@@ -27,13 +27,13 @@ const controller = (filters = { public: true, type: 'article' }) => {
   };
 
   const remove = (req, res) => {
-    model.findOneAndRemove({ type: 'article', url: req.params.url }, (err, docs) => {
+    model.findOneAndRemove({ url: req.params.url }, (err, doc) => {
       if(err) {
         res.status(500).send();
         return;
       }
 
-      if(!docs) {
+      if(!doc) {
         res.status(404).send();
       }
 
@@ -42,14 +42,20 @@ const controller = (filters = { public: true, type: 'article' }) => {
   };
 
   const save = (req, res) => {
-    let doc = new model(req.body);
+    const doc = new model(req.body);
+    doc.save((err, doc) => {
+      if(err) {
+        if(err.code === 11000) {
+          res.status(400).send();
+          return;
+        }
 
-    doc.save((err) => {
-      res.status(500).send();
-      return;
+        res.status(500).send();
+        return;
+      }
+
+      res.status(201).send();
     });
-
-    res.status(201).send();
   };
 
   const update = (req, res) => {
