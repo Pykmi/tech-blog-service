@@ -1,8 +1,7 @@
 var 
     models = require('../models'),
     mongoose = require('mongoose'),
-    Schema = mongoose.Schema,
-    types = require('../routers/constants');
+    Schema = mongoose.Schema;
 
 // create schema for the articles collection
 const model = new Schema({

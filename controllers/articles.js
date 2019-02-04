@@ -1,29 +1,27 @@
-var moment = require('moment'),
-    models = require('../models'),
-    utils = require('../utils');
+var moment = require('moment');
 
-const noContent = (res) => res.length < 1;
+const toObject = (content, output = {}) => {
+  content.map((item) => { output[item.url] = item });
+  
+  return output;
+};
 
-const badRequest = () => !words.every((word) => accepted.includes(word)) || words.length !== accepted.length;
-
-const controller = () => {
+const controller = (model, filters = { public: true, type: 'article' }) => {
   const fetch = (req, res) => {
-    models.articles.find(req.filters)
-      .select(['_id', 'title', 'author', 'category', 'tags', 'image', 'likes',
-               'url', 'smalltext', 'bodytext', 'created_at', 'modified_at'])
-      .exec((err, articles) => {
-        if(err) {
-          res.status(500).send();
-          return;
-        }
+    Object.keys(req.params).forEach((item) => filters[item] = req.params[item]);
 
-        if(noContent(articles)) {
-          res.status(404).send();
-        }
-        
-        res.json(utils.toObject(articles));
+    model.find(filters, (err, docs) => {
+      if(err) {
+        res.status(500).send();
+        return;
       }
-    );
+
+      if(docs.length < 1) {
+        res.status(404).send();
+      }
+      
+      res.json(toObject(docs));
+    });
   };
 
   const remove = (req, res) => {
@@ -33,15 +31,9 @@ const controller = () => {
   };
 
   const save = (req, res) => {
-    let article = new models.articles(req.body);
-    /* const valid = words.every((word) => accepted.includes(word));
+    let doc = new model(req.body);
 
-    if(badRequest()) {
-      res.status(400).send();
-      return;
-    }; */
-
-    article.save((err) => {
+    doc.save((err) => {
       res.status(500).send();
       return;
     });

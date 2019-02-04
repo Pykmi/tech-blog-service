@@ -1,14 +1,12 @@
 var express = require('express'),
     models = require('../models'),
-    controller = require('../controllers/articles'),
-    utils = require('../utils'),
-    route = require('./constants');
+    controller = require('../controllers/articles');
 
 // create an express router
 var router = express.Router();
 
 // route controllers
-router.route(route.BASE).post(controller().save);
-router.route(route.BY_TITLE).delete(controller().remove);
+router.route('/').post(controller().save);
+router.route('/article/:url').delete(controller().remove);
 
 module.exports = router;

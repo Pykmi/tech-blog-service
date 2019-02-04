@@ -1,31 +1,17 @@
 var express = require('express'),
-    models = require('../models'),
     controller = require('../controllers/articles'),
-    utils = require('../utils'),
-    route = require('./constants');
+    model = require('../models/articles');
 
 // create an express router
-var router = express.Router();
+const router = express.Router();
 
-// route middlewares
-router.use(route.BASE, (req, res, next) => {
-  req.filters = utils.filters(req.params);
-  next();
-});
-
-router.use(route.BY_TITLE, (req, res, next) => {
-  req.filters = utils.filters(req.params);
-  next();
-});
-
-router.use(route.BY_CATEGORY, (req, res, next) => {
-  req.filters = utils.filters(req.params);
-  next();
-});
+const filters = { public: true, type: 'article' };
 
 // route controllers
-router.route(route.BASE).get(controller().fetch);
-router.route(route.BY_TITLE).get(controller().fetch);
-router.route(route.BY_CATEGORY).get(controller().fetch);
+router.route('/').get(controller(model).fetch);
+router.route('/article/:url').get(controller(model).fetch);
+router.route('/category/:category').get(controller(model).fetch);
+router.route('/categories').get(controller(model).fetch);
+router.route('/tags').get(controller(model).fetch);
 
 module.exports = router;
