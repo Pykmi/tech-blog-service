@@ -1,4 +1,5 @@
-var moment = require('moment');
+var moment = require('moment')
+    model = require('../models/articles');
 
 const toObject = (content, output = {}) => {
   content.map((item) => { output[item.url] = item });
@@ -6,7 +7,7 @@ const toObject = (content, output = {}) => {
   return output;
 };
 
-const controller = (model, filters = { public: true, type: 'article' }) => {
+const controller = (filters = { public: true, type: 'article' }) => {
   const fetch = (req, res) => {
     Object.keys(req.params).forEach((item) => filters[item] = req.params[item]);
 
@@ -15,9 +16,10 @@ const controller = (model, filters = { public: true, type: 'article' }) => {
         res.status(500).send();
         return;
       }
-
+      
       if(docs.length < 1) {
         res.status(404).send();
+        return;
       }
       
       res.json(toObject(docs));
