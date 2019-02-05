@@ -59,7 +59,21 @@ const controller = (filters = { public: true }) => {
   };
 
   const update = (req, res) => {
-    req.article.title = req.body.title;
+    model.findOneAndUpdate({ url: req.params.url }, req.body, (err, doc) => {
+      console.log(err);
+      console.log(doc);
+      if(err) {
+        res.status(500).send();
+        return;
+      }
+
+      if(!doc) {
+        res.status(404).send();
+      }
+
+      res.status(200).send();
+    });
+    /* req.article.title = req.body.title;
     req.article.author = req.body.author;
     req.article.category = req.body.category;
     req.article.tags = req.body.tags;
@@ -70,7 +84,7 @@ const controller = (filters = { public: true }) => {
     req.article.bodytext = req.body.bodytext;
     req.article.public = req.body.public;
     req.article.created_at = req.body.created_at;
-    req.article.modified_at = req.body.modified_at;
+    req.article.modified_at = req.body.modified_at; */
 
     /* req.article.save((err) => {
       err ? res.status(500).send() : res.status(200).send();
