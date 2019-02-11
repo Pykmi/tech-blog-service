@@ -1,6 +1,7 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
     morgan = require('morgan'),
+    secure = require('./auth/middleware'),
     cors = require('./cors'),
     connect = require('./connect'),
     router = require('./routers');
@@ -19,6 +20,6 @@ connect();
 
 // routers
 app.use('/api/blog', router.blog);
+app.use('/api/blog/admin', secure, router.admin);
 
 module.exports = app;
-app.use('/api/blog/admin', router.admin);

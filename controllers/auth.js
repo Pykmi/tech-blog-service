@@ -1,13 +1,6 @@
 var bcrypt = require('bcrypt'),
-    config = require('../config/auth'),
-    jwt = require('jsonwebtoken'),
+    auth = require('../auth/utils'),
     model = require('../models/users');
-
-const getToken = (req) => req.headers.authorization.split('Bearer ')[1];
-
-const getUserId = (token) => jwt.verify(token, config.secret);
-
-const sign = (userId) => jwt.sign({ id: userId }, config.secret, config.options);
 
 const controller = () => {
   const signIn = (req, res) => {
@@ -28,7 +21,7 @@ const controller = () => {
             res.status(403).send();
           }
           
-          res.status(200).send({ token: sign(doc._id)});
+          res.status(200).send({ token: auth.signToken(doc._id)});
         })
         .catch((err) => {
           res.status(403).send();
@@ -36,29 +29,15 @@ const controller = () => {
     });
   };
 
-  const verify = (req, res) => {
-    const token = getToken(req);
-    if(!token) {
+  const whoami = (req, res) => {
+    if(!req.user) {
       res.status(401).send();
+      return;
     }
-
-    const payload = getUserId(token);
-    model.findById(payload.id, (err, doc) => {
-      if(err) {
-        res.status(401).send();
-        return;
-      }
-
-      if(!doc) {
-        res.status(401).send();
-        return;
-      }
-
-      res.status(200).send();
-    });
+    res.status(200).send(req.user);
   }
 
-  return { signIn, verify };
+  return { signIn, whoami };
 };
 
 module.exports = controller;
