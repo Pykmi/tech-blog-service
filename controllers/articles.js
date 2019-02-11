@@ -60,8 +60,6 @@ const controller = (filters = { public: true }) => {
 
   const update = (req, res) => {
     model.findOneAndUpdate({ url: req.params.url }, req.body, (err, doc) => {
-      console.log(err);
-      console.log(doc);
       if(err) {
         res.status(500).send();
         return;
