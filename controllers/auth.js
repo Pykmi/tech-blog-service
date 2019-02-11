@@ -3,10 +3,14 @@ var bcrypt = require('bcrypt'),
     jwt = require('jsonwebtoken'),
     model = require('../models/users');
 
+const getToken = (req) => req.headers.authorization.split('Bearer ')[1];
+
+const getUserId = (token) => jwt.verify(token, config.secret);
+
 const sign = (userId) => jwt.sign({ id: userId }, config.secret, config.options);
 
 const controller = () => {
-  const verify = (req, res) => {
+  const signIn = (req, res) => {
     model.findOne({ email: req.body.email }, (err, doc) => {
       if(err) {
         res.status(500).send();
@@ -27,13 +31,34 @@ const controller = () => {
           res.status(200).send({ token: sign(doc._id)});
         })
         .catch((err) => {
-          console.log(err);
           res.status(403).send();
         })
     });
   };
 
-  return { verify };
+  const verify = (req, res) => {
+    const token = getToken(req);
+    if(!token) {
+      res.status(401).send();
+    }
+
+    const payload = getUserId(token);
+    model.findById(payload.id, (err, doc) => {
+      if(err) {
+        res.status(401).send();
+        return;
+      }
+
+      if(!doc) {
+        res.status(401).send();
+        return;
+      }
+
+      res.status(200).send();
+    });
+  }
+
+  return { signIn, verify };
 };
 
 module.exports = controller;
