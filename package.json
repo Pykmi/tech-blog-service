@@ -12,6 +12,7 @@
   "dependencies": {
     "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
+    "command-line-args": "^5.0.2",
     "express": "^4.16.4",
     "gulp": "^3.9.1",
     "gulp-mocha": "^6.0.0",
