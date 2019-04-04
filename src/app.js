@@ -1,4 +1,4 @@
-const app = require('./server');
+import app from './server';
     
 // acquire or set default web server port
 const port = process.env.PORT || 6002;
