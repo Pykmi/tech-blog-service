@@ -1,10 +1,7 @@
-var express = require('express'),
-    app = require('./server');
-
+const app = require('./server');
+    
 // acquire or set default web server port
-var port = process.env.PORT || 6002;
-
-
+const port = process.env.PORT || 6002;
 
 // default root route
 app.get('/', (req, res) => {
