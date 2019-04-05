@@ -1,20 +1,20 @@
 import model from '../models/users';
-import auth from '../auth/utils';
+import { getToken, getUser, noHeaders } from '../auth/utils';
 
 // Auth middleware
 const secure = (req, res, next) => {
-  if(auth.noHeaders(req)) {
+  if(noHeaders(req)) {
     res.status(401).send();
     return;
   }
 
-  const token = auth.getToken(req);
+  const token = getToken(req);
   
   if(!token) {
     res.status(401).send();
   }
 
-  auth.getUser(token)
+  getUser(token)
     .then((payload) => {
       model.findById(payload.id, (err, doc) => {
         if(err) {

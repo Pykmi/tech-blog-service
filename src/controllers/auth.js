@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import auth from '../auth/utils';
+import { signToken } from '../auth/utils';
 import model from '../models/users';
 
 const controller = () => {
@@ -21,7 +21,7 @@ const controller = () => {
             res.status(403).send();
           }
           
-          res.status(200).send({ token: auth.signToken(doc._id)});
+          res.status(200).send({ token: signToken(doc._id)});
         })
         .catch((err) => {
           res.status(403).send();
