@@ -1,13 +1,13 @@
-var express = require('express'),
-    bodyParser = require('body-parser'),
-    morgan = require('morgan'),
-    secure = require('./auth/middleware'),
-    cors = require('./cors'),
-    connect = require('./connect'),
-    router = require('./routers');
+import express from 'express';
+import bodyParser from 'body-parser';
+import morgan from 'morgan';
+import secure from './auth/middleware';
+import cors from './cors';
+import connect from './connect';
+import router from './routers';
 
 // create server
-var app = express();
+const app = express();
 
 // middleware
 app.use(cors);

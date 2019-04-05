@@ -1,5 +1,4 @@
-var moment = require('moment')
-    model = require('../models/articles');
+import model from '../models/articles';
 
 const toObject = (content, output = {}) => {
   content.map((item) => { output[item.url] = item });
