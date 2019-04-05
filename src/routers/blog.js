@@ -18,4 +18,4 @@ router.route('/tags').get(lists({ name: 'tags' }).fetch);
 
 router.route('/login').post(auth().signIn);
 
-module.exports = router;
+export default router;

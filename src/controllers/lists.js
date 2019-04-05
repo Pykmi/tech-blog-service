@@ -1,4 +1,4 @@
-var model = require('../models/lists');
+import model from '../models/lists';
 
 const controller = (filters) => {
   const fetch = (req, res) => {
@@ -25,4 +25,4 @@ const controller = (filters) => {
   return { fetch };
 };
 
-module.exports = controller;
+export default controller;

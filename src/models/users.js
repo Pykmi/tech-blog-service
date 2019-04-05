@@ -1,7 +1,6 @@
-var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+import mongoose from 'mongoose';
 
-const model = new Schema({
+const model = new mongoose.Schema({
   name: { type: String, trim: true },
   email: {
     unique: true,

@@ -1,2 +1,4 @@
-exports.blog = require('./blog');
-exports.admin = require('./admin');
+import admin from './admin';
+import blog from './blog';
+
+export default { admin, blog };

@@ -1,10 +1,9 @@
-var express = require('express'),
-    models = require('../models'),
-    auth = require('../controllers/auth'),
-    controller = require('../controllers/articles');
+import express from 'express';
+import auth from '../controllers/auth';
+import controller from '../controllers/articles';
 
 // create an express router
-var router = express.Router();
+const router = express.Router();
 
 // route controllers
 router.route('/article').post(controller().save);
@@ -13,4 +12,4 @@ router.route('/article/:url').put(controller().update);
 
 router.route('/whoami').get(auth().whoami);
 
-module.exports = router;
+export default router;

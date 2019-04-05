@@ -17,4 +17,4 @@ app.listen(port, () => {
 });
 
 // export app for testing purpose
-module.exports = app;
+export default app;
