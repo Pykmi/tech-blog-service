@@ -1,7 +1,7 @@
-var express = require('express'),
-    auth = require('../controllers/auth'),
-    articles = require('../controllers/articles')
-    lists = require('../controllers/lists');
+import express from 'express';
+import auth from '../controllers/auth';
+import articles from '../controllers/articles';
+import lists from '../controllers/lists';
 
 // create an express router
 const router = express.Router();

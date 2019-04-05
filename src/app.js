@@ -1,10 +1,10 @@
-var express = require('express'),
-    app = require('./server');
+import app from './server';
+import config from './config';
+
+config();
 
 // acquire or set default web server port
-var port = process.env.PORT || 6002;
-
-
+const port = process.env.PORT;
 
 // default root route
 app.get('/', (req, res) => {
