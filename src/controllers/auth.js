@@ -1,6 +1,6 @@
-var bcrypt = require('bcrypt'),
-    auth = require('../auth/utils'),
-    model = require('../models/users');
+import bcrypt from 'bcrypt';
+import auth from '../auth/utils';
+import model from '../models/users';
 
 const controller = () => {
   const signIn = (req, res) => {
@@ -40,4 +40,4 @@ const controller = () => {
   return { signIn, whoami };
 };
 
-module.exports = controller;
+export default controller;

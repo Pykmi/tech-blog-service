@@ -22,4 +22,4 @@ connect();
 app.use('/api/blog', router.blog);
 app.use('/api/blog/admin', secure, router.admin);
 
-module.exports = app;
+export default app;

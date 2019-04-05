@@ -91,4 +91,4 @@ const controller = (filters = { public: true }) => {
   return { fetch, remove, save, update };
 };
 
-module.exports = controller;
+export default controller;

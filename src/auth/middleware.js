@@ -1,5 +1,5 @@
-var model = require('../models/users'),
-    auth = require('../auth/utils');
+import model from '../models/users';
+import auth from '../auth/utils';
 
 // Auth middleware
 const secure = (req, res, next) => {
@@ -38,4 +38,4 @@ const secure = (req, res, next) => {
     });
 };
 
-module.exports = secure;
+export default secure;

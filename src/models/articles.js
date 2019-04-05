@@ -1,10 +1,8 @@
-var 
-    models = require('../models'),
-    mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+import models from '../models';
+import mongoose from 'mongoose';
 
 // create schema for the articles collection
-const model = new Schema({
+const model = new mongoose.Schema({
   url: {
     unique: true,
     type: String
@@ -68,4 +66,4 @@ model.pre('save', function(next) {
   next();
 });
 
-module.exports = mongoose.model('article', model);
+export default mongoose.model('article', model);
