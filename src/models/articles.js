@@ -22,6 +22,14 @@ const model = new mongoose.Schema({
     trim: true,
     lowercase: true
   },
+  featured: {
+    type: Boolean,
+    default: false
+  },
+  searchable: {
+    type: Boolean,
+    default: true
+  },
   public: {
     type: Boolean,
     default: false

@@ -6,7 +6,7 @@ const toObject = (content, output = {}) => {
   return output;
 };
 
-const controller = (filters = { public: true }) => {
+const controller = (filters = { public: true, searchable: true }) => {
   const fetch = (req, res) => {
     Object.keys(req.params).forEach((item) => filters[item] = req.params[item]);
 
@@ -70,22 +70,6 @@ const controller = (filters = { public: true }) => {
 
       res.status(200).send();
     });
-    /* req.article.title = req.body.title;
-    req.article.author = req.body.author;
-    req.article.category = req.body.category;
-    req.article.tags = req.body.tags;
-    req.article.likes = req.body.likes;
-    req.article.url = req.body.url;
-    req.article.image = req.body.image;
-    req.article.smalltext = req.body.smalltext;
-    req.article.bodytext = req.body.bodytext;
-    req.article.public = req.body.public;
-    req.article.created_at = req.body.created_at;
-    req.article.modified_at = req.body.modified_at; */
-
-    /* req.article.save((err) => {
-      err ? res.status(500).send() : res.status(200).send();
-    }); */
   };
 
   return { fetch, remove, save, update };
